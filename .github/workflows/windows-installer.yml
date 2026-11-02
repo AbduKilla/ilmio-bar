@@ -23,12 +23,15 @@ jobs:
           node-version: 22
 
       - name: Installa dipendenze
-        run: npm install --prefix windows-app
+        working-directory: windows-app
+        run: npm install
 
       - name: Crea installer Windows
-        run: npm run dist --prefix windows-app
+        working-directory: windows-app
+        run: npm run dist
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Rendi disponibile l'installer
         uses: actions/upload-artifact@v4
         with:
