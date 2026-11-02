@@ -1,0 +1,37 @@
+{
+  "name": "il-mio-bar",
+  "version": "1.0.0",
+  "description": "Il Mio Bar - gioco gestionale accessibile di Killa Records Games",
+  "main": "main.js",
+  "author": "Killa Records Games",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win nsis"
+  },
+  "devDependencies": {
+    "electron": "^39.0.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.killarecordsgames.ilmio-bar",
+    "productName": "Il Mio Bar",
+    "directories": { "output": "dist" },
+    "files": ["main.js", "preload.js", "src/**/*", "package.json"],
+    "asar": true,
+    "publish": [{ "provider": "github", "owner": "AbduKilla", "repo": "ilmio-bar" }],
+    "win": {
+      "target": [{ "target": "nsis", "arch": ["x64"] }],
+      "artifactName": "Il-Mio-Bar-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Il Mio Bar",
+      "runAfterFinish": true
+    }
+  }
+}
