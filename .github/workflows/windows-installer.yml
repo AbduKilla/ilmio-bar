@@ -1,0 +1,39 @@
+
+name: Crea installer Windows
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Scarica il repository
+        uses: actions/checkout@v4
+
+      - name: Configura Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Installa dipendenze
+        run: npm install --prefix windows-app
+
+      - name: Crea installer Windows
+        run: npm run dist --prefix windows-app
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Rendi disponibile l'installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: Il-Mio-Bar-Windows
+          path: |
+            windows-app/dist/*.exe
+            windows-app/dist/latest.yml
+          if-no-files-found: warn
